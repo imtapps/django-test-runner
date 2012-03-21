@@ -35,11 +35,14 @@ class DjangoPyCharmRunner(DjangoTestSuiteRunner):
         for file_path in self.get_py_files(discovery_root):
             with open(file_path) as python_file:
                 data = python_file.read()
+
                 class_and_method_names = app_label_parts[1:]
                 if all([True if item in data else False for item in class_and_method_names]):
                     test_case_path = self.build_test_case_path(class_and_method_names, file_path)
-                    tests.append(defaultTestLoader.loadTestsFromName(test_case_path))
-                    break
+                    try:
+                        tests.append(defaultTestLoader.loadTestsFromName(test_case_path))
+                    except AttributeError:
+                        pass #This means a class name was found but wasn't a class
         return tests
 
     def get_tests_two(self, discovery_root, pattern):
@@ -52,7 +55,8 @@ class DjangoPyCharmRunner(DjangoTestSuiteRunner):
         return [tests]
 
     def build_suite(self, test_labels, extra_tests=None, **kwargs):
-        print "build suite"
+        print test_labels
+        print settings.ROOT_DIR
         suite = ut2.TestSuite()
 
         pattern = "*.py"

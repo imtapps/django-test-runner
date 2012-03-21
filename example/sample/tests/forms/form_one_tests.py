@@ -2,5 +2,5 @@ from django.utils import unittest
 
 class FormOneTests(unittest.TestCase):
 
-    def test_fail(self):
-        self.fail("form one tests")
+    def test_first(self):
+        self.assertTrue(True)

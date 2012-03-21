@@ -19,6 +19,7 @@ DATABASES = {
 
 INSTALLED_APPS = (
     'sample',
+#    'djtest_runner',
 )
 
 TEST_RUNNER = "djtest_runner.DjangoPyCharmRunner"
